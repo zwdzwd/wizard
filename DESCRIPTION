@@ -1,0 +1,15 @@
+Package: wzard
+Type: Package
+Title: R utilities
+URL: https://github.com/zwdzwd/sesame
+Version: 0.1
+Date: 2016-04-12
+Author: Wanding Zhou
+Depends:
+    R (>= 3.0.2)
+Maintainer: Wanding Zhou <zhouwanding@gmail.com>
+Description: My in-house R package.
+License: MIT + file LICENSE
+LazyData: TRUE
+RoxygenNote: 5.0.1
+Suggests: ggplot2, DNAcopy, GenomicRanges, IRanges, scales, wheatmap, R6, illuminaio, MASS, grid, parallel, preprocessCore, stats, randomForest, XML
