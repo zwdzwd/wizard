@@ -17,7 +17,9 @@ double  median_inplace(double *x, int length){
   return med;
 }
 
-SEXP group_to_median_(SEXP x, SEXP f) {
+SEXP group_to_median_sorted_(SEXP x, SEXP f) {
+
+  /* x must be sorted by f */
   int nlevs = nlevels(f);
 
   if (TYPEOF(x) != REALSXP)
@@ -30,46 +32,24 @@ SEXP group_to_median_(SEXP x, SEXP f) {
   int *fc = INTEGER(f);
   double *xc = REAL(x);
   double *rc = REAL(r);
-  int lv1 = -1;
-  int lv2 = -1;
-  int cnt1 = 4;
-  int cnt2 = 4;
-  double obs1[4], obs2[4];
+  int lv = fc[0];
+  int cnt = 0;
+  double obs[4];
 
-  int i, lv;
+  int i, lv_;
   for (i=0; i<LENGTH(x); ++i) {
-    lv = fc[i];
-    if (lv != lv1 && lv != lv2) {
-      if (cnt1 >= 3) {          /* reset allele 1 */
-        if (lv1 >= 0) {
-          rc[lv1-1] = median_inplace(obs1, cnt1);
-          /* Rprintf("lvl: %d\tcnt: %d\tmedian: %1.2f\n", lv1, cnt1, rc[lv1]); */
-        }
-        lv1 = lv; cnt1 = 0;
-      } else if (cnt2 >= 3) {   /* reset allele 2 */
-        if (lv2 >= 0) {
-          rc[lv2-1] = median_inplace(obs2, cnt2);
-          /* Rprintf("lvl: %d\tcnt: %d\tmedian: %1.2f\n", lv2, cnt2, rc[lv2]); */
-        }
-        lv2 = lv; cnt2 = 0;
-      }
+    lv_ = fc[i];
+    if (lv != lv_) {
+      rc[lv-1] = median_inplace(obs, cnt);
+      lv = lv_; cnt = 0;
     }
 
-    if (lv == lv1) {
-      obs1[cnt1] = xc[i];
-      cnt1++;
-    } else if (lv == lv2) {
-      obs2[cnt2] = xc[i];
-      cnt2++;
-    }
+    obs[cnt++] = xc[i];
   }
 
   /* clean up */
-  if (cnt1 >= 1 && lv1 >= 0)
-    rc[lv1-1] = median_inplace(obs1, cnt1);
-
-  if (cnt2 >= 1 && lv2 >= 0)
-    rc[lv2-1] = median_inplace(obs2, cnt2);
+  if (cnt >= 1)
+    rc[lv-1] = median_inplace(obs, cnt);
 
   setAttrib(r, R_NamesSymbol, getAttrib(f, R_LevelsSymbol));
   UNPROTECT(1);
