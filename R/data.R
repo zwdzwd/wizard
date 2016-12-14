@@ -17,7 +17,7 @@ getBuiltInData <- function(nm, platform='', subdir='') {
     base.dir <- paste0(base.dir, subdir, '/');
   }
 
-  wzhome <- Sys.getenv('WZARD_HOME')
+  wzhome <- Sys.getenv('WZARDHOME')
   dir.create(wzhome, showWarnings = FALSE) # make sure directory exists
   localpath <- paste0(wzhome, '/', datanm, '.rds')
   if (wzhome != "") {
