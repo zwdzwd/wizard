@@ -2,5 +2,10 @@
 
 export(group.to.max.sorted)
 export(group.to.median.sorted)
+export(read.cel.signals)
+export(sset.cn.signal)
+export(sset.snp.signal)
+import(GenomicRanges)
+importFrom(affyio,read.celfile)
 useDynLib(wzard,group_to_max_sorted_)
 useDynLib(wzard,group_to_median_sorted_)

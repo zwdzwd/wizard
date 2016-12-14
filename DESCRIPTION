@@ -12,4 +12,5 @@ Description: My in-house R package.
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Suggests: ggplot2, DNAcopy, GenomicRanges, IRanges, scales, wheatmap, R6, illuminaio, MASS, grid, parallel, preprocessCore, stats, randomForest, XML
+Imports: GenomicRanges, affyio
+Suggests: ggplot2, DNAcopy, IRanges, scales, wheatmap, R6, illuminaio, MASS, grid, parallel, preprocessCore, stats, randomForest, XML
